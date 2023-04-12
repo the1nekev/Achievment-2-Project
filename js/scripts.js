@@ -1,39 +1,44 @@
-//Empty Array for PokeDex
-const pokemonList = [];
+//IIFE 
+let pokemonRepository = (function () {
 
-//Adding the first PokeDex "page"
-pokemonList[0] = {
-    name: "Heracross",
-    height: 1.5 , // changed the date type for height from 'string' to 'integer'
-    types: ["Bug", "Fighting"]
-};
+    //pokemon array
+    let pokemonList = [
+        {
+            name: "Heracross",
+            types: ["Bug", "Fighting"],
+            height: 1.5
+        },
+        {
+            name: "Lucario",
+            types: ["Steel", "Fighting"],
+            height: 1.2
+        },
+        {
+            name: "Squirtle",
+            types: ["Water"],
+            height: 0.5
+        },
 
-//Second PokeDex "page"
-pokemonList[1] = {
-    name: "Lucario",
-    height: 1.2,
-    types: ["Fighting", "Steel"]
-};
+    ];
 
-//Third "page"
-pokemonList[2] = {
-    name: "Squirtle",
-    height: 0.5,
-    types: ["Water"]
-};
-
-//Output for testing PokeDex "pages"
-console.log(pokemonList);
-
-//For Loop to iterate through PokeDex
-for (let i = 0; i < pokemonList.length; i++){
-    document.write(pokemonList[i].name + " " + "(height: " + pokemonList[i].height + ")" + " ");
-    //conditional to check pokemon height
-    if (pokemonList[i].height > 1.3){
-       document.write("-Wow that's a big Pokemon");
-    } else {
-        document.write(" -Little Man!")
+    //getAll() function to get pokemonList
+    function getAll() {
+        return pokemonList;
     }
-    document.write("<br>")
 
-};
+    //add() funtion to add item to pokemonList
+    function add(){
+        pokemonList.push(pokemon);
+    }
+
+    return{
+        add: add,
+        getAll: getAll
+    };
+
+}) ();
+//console.log(pokemonRepository.getAll());
+
+
+//forEach Loop to iterate through PokeDex
+pokemonRepository.getAll().forEach(pokemonList => console.log(pokemonList));
