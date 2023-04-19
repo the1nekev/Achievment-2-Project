@@ -1,6 +1,8 @@
 //IIFE 
 let pokemonRepository = (function () {
 
+    let modalContainer = document.querySelector('#modal-container');
+
     //pokemon array
     let pokemonList = [];
     //pokeApi
@@ -33,6 +35,7 @@ let pokemonRepository = (function () {
         button.classList.add("button-class");
         listPokemon.appendChild(button);
         pokemonList.appendChild(listPokemon);
+        //click event to log pokemon details
         button.addEventListener("click", function(event) {
             showDetails(pokemon);
         });
@@ -73,7 +76,20 @@ let pokemonRepository = (function () {
     //log pokemon details to the console with click event.
     function showDetails(pokemon){
         loadDetails(pokemon).then(function (){
-            console.log(pokemon)
+            modalContainer.innerHTML = '';
+
+            let modal = document.createElement('div');
+            modal.classList.add('modal');
+
+
+            //Why can i not pull the var item.imageUrl (showDetails) to append to modal?
+            let pokeImg = document.createElement('img');
+            pokeImg.innerHTML = ;
+
+            modal.appendChild(pokeImg);
+            modalContainer.appendChild(modal);
+
+            modalContainer.classList.add('is-visible');
         });
     };
 
