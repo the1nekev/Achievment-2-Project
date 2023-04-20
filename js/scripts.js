@@ -73,23 +73,66 @@ let pokemonRepository = (function () {
         });
     }
 
+    //function to close modal
+    function hideModal() {
+        modalContainer.classList.remove('is-visible');
+    }
+
     //log pokemon details to the console with click event.
     function showDetails(pokemon){
         loadDetails(pokemon).then(function (){
             modalContainer.innerHTML = '';
 
+            //modal in modalContainer
             let modal = document.createElement('div');
             modal.classList.add('modal');
 
+            //setting img container in modal
+            let imgContainer = document.createElement('div');
+            imgContainer.classList.add('imgContainer');
 
-            //Why can i not pull the var item.imageUrl (showDetails) to append to modal?
-            let pokeImg = document.createElement('img');
-            pokeImg.innerHTML = ;
+            //extracting pokemon name to display on Modal
+            let pokeName = document.createElement('h3');
+            pokeName.innerText = pokemon.name;
 
-            modal.appendChild(pokeImg);
+            //extracting pokemon height to display on Modal
+            let pokeHeight = document.createElement('h3');
+            pokeHeight.innerText = pokemon.height + ' meters';
+
+            //adding img to imgContainer in modal
+            let pokemonImg = document.createElement('img');
+            pokemonImg.src = pokemon.imageUrl;
+
+            //close button functionality
+            let closeButton = document.createElement('button');
+            closeButton.classList.add('modal-close');
+            closeButton.innerText = 'close';
+            closeButton.addEventListener('click', hideModal)
+
+            //adding element to modal and modalContainer
+            modal.appendChild(pokeName);
+            modal.appendChild(pokeHeight);
+            imgContainer.appendChild(pokemonImg);
+            modal.appendChild(imgContainer);
+            modal.appendChild(closeButton);
             modalContainer.appendChild(modal);
 
             modalContainer.classList.add('is-visible');
+
+            //click-out functionality
+            modalContainer.addEventListener('click', (e) => {
+                let target = e.target;
+                if (target === modalContainer) {
+                    hideModal();
+                }
+            });
+
+            //esc key funcionality
+            window.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && modalContainer.classList.contains('is-visible')) {
+                    hideModal();
+                }
+            });
         });
     };
 
@@ -103,10 +146,9 @@ let pokemonRepository = (function () {
         showDetails: showDetails
     };
     
-
 }) ();
 
-//console.log(pokemonRepository.getAll());
+
 
 //forEach Loop to iterate through PokeDex
 pokemonRepository.loadList().then(function() {
